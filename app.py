@@ -1,7 +1,9 @@
 from flask import Flask
+from flask import Blueprint
 
 
 app: Flask = Flask(__name__)
+app.config.from_mapping(DATABASE="")
 
 
 @app.route("/books", methods=["GET"])
