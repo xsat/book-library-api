@@ -9,7 +9,7 @@ class Author:
     def __init__(self,
                  author_id: int,
                  name: str,
-                 created_at: datetime | None) -> None:
+                 created_at: datetime | None = None) -> None:
         self.__author_id = author_id
         self.__name = name
         self.__created_at = created_at

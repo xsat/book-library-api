@@ -12,8 +12,8 @@ class Book:
                  book_id: int,
                  user_id: int,
                  title: str,
-                 description: str,
-                 created_at: datetime | None) -> None:
+                 description: str | None = None,
+                 created_at: datetime | None = None) -> None:
         self.__book_id = book_id
         self.__user_id = user_id
         self.__title = title
