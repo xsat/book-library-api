@@ -1,13 +1,15 @@
 from flask import Blueprint
+from ..models.author import Author
 
-
-authors_controller: Blueprint = Blueprint('books_controller', __name__, url_prefix='authors')
+authors_controller: Blueprint = Blueprint('authors_controller', __name__, url_prefix='/authors')
 
 
 @authors_controller.route("/", methods=["GET"])
 def authors_list_get() -> dict:
     return {
-        "list": []
+        "list": [
+            dict(Author(1, "First book", None))
+        ]
     }
 
 

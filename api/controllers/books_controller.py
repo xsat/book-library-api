@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 
-books_controller: Blueprint = Blueprint('books_controller', __name__, url_prefix='books')
+books_controller: Blueprint = Blueprint('books_controller', __name__, url_prefix='/books')
 
 
 @books_controller.route("/", methods=["GET"])

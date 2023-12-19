@@ -13,9 +13,16 @@ class Book:
                  user_id: int,
                  title: str,
                  description: str,
-                 created_at: datetime) -> None:
+                 created_at: datetime | None) -> None:
         self.__book_id = book_id
         self.__user_id = user_id
         self.__title = title
         self.__description = description
         self.__created_at = created_at
+
+    def __iter__(self) -> GeneratorExit:
+        yield 'book_id', self.__book_id
+        yield 'user_id', self.__user_id
+        yield 'title', self.__title
+        yield 'description', self.__description
+        yield 'created_at', self.__created_at
