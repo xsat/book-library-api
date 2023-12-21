@@ -1,13 +1,22 @@
 from flask import Blueprint
 from ..models.author import Author
+from ..db import get_db, Connection
+
 
 authors_controller: Blueprint = Blueprint('authors_controller', __name__, url_prefix='/authors')
 
 
 @authors_controller.route("/", methods=["GET"])
 def authors_list_get() -> dict:
+    connection: Connection = get_db()
+
+    connection.store_result()
+    connection.query("SELECT 1;")
+    result = connection.use_result()
+    print(result.fetch_row())
+
     return {
-        "list": [
+        "list": [g
             dict(Author(1, "First book", None))
         ]
     }
