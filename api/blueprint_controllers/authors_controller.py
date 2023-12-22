@@ -1,7 +1,7 @@
 from flask import Blueprint
 from ..models.author import Author
 from ..db import select_one, select_all
-
+from ..models.user import User
 
 authors_controller: Blueprint = Blueprint('authors_controller', __name__, url_prefix='/authors')
 
@@ -10,10 +10,10 @@ authors_controller: Blueprint = Blueprint('authors_controller', __name__, url_pr
 def authors_list_get() -> dict:
     print(select_all("SELECT * FROM users"))
 
-    print(select_one("SELECT * FROM users WHERE user_id = %s", (1, )))
-
+    test_user = User(select_one("SELECT * FROM users WHERE user_id = %s", (1,)))
 
     return {
+        "users": [test_user],
         "list": [
             dict(Author(1, "First book", None))
         ]
