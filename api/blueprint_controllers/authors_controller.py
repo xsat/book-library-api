@@ -1,6 +1,6 @@
 from flask import Blueprint
 from ..models.author import Author
-from ..db import get_db, Connection
+from ..db import select_one, select_all
 
 
 authors_controller: Blueprint = Blueprint('authors_controller', __name__, url_prefix='/authors')
@@ -8,15 +8,13 @@ authors_controller: Blueprint = Blueprint('authors_controller', __name__, url_pr
 
 @authors_controller.route("/", methods=["GET"])
 def authors_list_get() -> dict:
-    connection: Connection = get_db()
+    print(select_all("SELECT * FROM users"))
 
-    connection.store_result()
-    connection.query("SELECT 1;")
-    result = connection.use_result()
-    print(result.fetch_row())
+    print(select_one("SELECT * FROM users WHERE user_id = %s", (1, )))
+
 
     return {
-        "list": [g
+        "list": [
             dict(Author(1, "First book", None))
         ]
     }
