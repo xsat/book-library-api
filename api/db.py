@@ -28,11 +28,16 @@ def select_all(query: str, args: tuple | dict | None = None) -> list[dict]:
     return result
 
 
-def execute(query: str, args: tuple | dict | None = None) -> None:
+def execute(query: str, args: tuple | dict | None = None) -> int | None:
     db: Connection = _get_db()
     cursor: Cursor = db.cursor()
     cursor.execute(query, args)
+
+    last_id: int | None = cursor.lastrowid()
+
     cursor.close()
+
+    return last_id
 
 
 def _get_db() -> Connection:

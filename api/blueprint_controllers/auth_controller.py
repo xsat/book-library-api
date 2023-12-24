@@ -16,9 +16,9 @@ def auth_login() -> dict:
     error: str | None = None
 
     found_user = user_find_by_username(username)
-    if found_user is None or not password_check(password, found_user['password_hash']):
-        error = "Username or password are invalid"
-        found_user = None
+    # if found_user is None or not password_check(password, found_user.__password_hash):
+    #     error = "Username or password are invalid"
+    #     found_user = None
 
     return {
         "error": error,

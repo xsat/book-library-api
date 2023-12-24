@@ -1,0 +1,2 @@
+class UserToken(dict):
+    pass
