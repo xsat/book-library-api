@@ -33,11 +33,13 @@ def execute(query: str, args: tuple | dict | None = None) -> int | None:
     cursor: Cursor = db.cursor()
     cursor.execute(query, args)
 
-    last_id: int | None = cursor.lastrowid()
+    print(type(cursor.lastrowid()))
 
+    # last_id: int | None = cursor.lastrowid()
+    #
     cursor.close()
 
-    return last_id
+    return 0
 
 
 def _get_db() -> Connection:

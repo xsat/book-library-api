@@ -1,13 +1,16 @@
 from .base_model import BaseModel
 
+from datetime import datetime
+
+DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 
 class UserToken(BaseModel):
     def __init__(self,
                  user_token_id: int,
                  user_id: int,
                  access_token: str,
-                 created_at: str,
-                 expired_at: str):
+                 created_at: datetime,
+                 expired_at: datetime):
         self.__user_token_id = user_token_id
         self.__user_id = user_id
         self.__access_token = access_token
@@ -23,17 +26,15 @@ class UserToken(BaseModel):
     def access_token(self) -> str:
         return self.__access_token
 
-    def created_at(self) -> str:
+    def created_at(self) -> datetime:
         return self.__created_at
 
-    def expired_at(self) -> str:
+    def expired_at(self) -> datetime:
         return self.__expired_at
 
     def json_serialize(self) -> dict:
         return {
             "access_token": self.__access_token,
-            "created_at": self.__created_at,
-            "expired_at": self.__expired_at
         }
 
 
@@ -49,6 +50,6 @@ def build_user_token_from_dict(data: dict) -> UserToken:
         data["user_token_id"],
         data["user_id"],
         data["access_token"],
-        data["created_at"],
-        data["expired_at"],
+        datetime.strptime(data["created_at"], DATETIME_FORMAT),
+        datetime.strptime(data["expired_at"], DATETIME_FORMAT)
     )

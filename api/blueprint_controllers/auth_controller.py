@@ -2,8 +2,10 @@ from flask import Blueprint
 from flask import request
 
 
-from ..data_mappers.users_data_mapper import user_find_by_username
-from ..password import password_check
+from ..data_managers.users_data_manager import user_find_by_username
+from ..data_managers.user_tokens_data_manager import user_token_create_by_user
+from ..hash import password_check
+from ..models.user_token import UserToken
 
 
 auth_controller: Blueprint = Blueprint('auth_controller', __name__, url_prefix='/auth')
@@ -18,15 +20,10 @@ def auth_login() -> dict:
     if found_user is None or not password_check(password, found_user.password_hash()):
         raise RuntimeError("Username or password are invalid")
 
-
+    new_user_token: UserToken = user_token_create_by_user(found_user)
 
     return {
-        "found_user": found_user,
-        "debug": {
-            "username": username,
-            "password": password
-        },
-        "access_token": None
+        "user_token": new_user_token
     }
 
 
