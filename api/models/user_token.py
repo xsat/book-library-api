@@ -14,6 +14,21 @@ class UserToken(BaseModel):
         self.__created_at = created_at
         self.__expired_at = expired_at
 
+    def user_token_id(self) -> int:
+        return self.__user_token_id
+
+    def user_id(self) -> int:
+        return self.__user_id
+
+    def access_token(self) -> str:
+        return self.__access_token
+
+    def created_at(self) -> str:
+        return self.__created_at
+
+    def expired_at(self) -> str:
+        return self.__expired_at
+
     def json_serialize(self) -> dict:
         return {
             "access_token": self.__access_token,
