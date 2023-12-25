@@ -1,4 +1,4 @@
-from ..models.user import User
+from ..models.user import User, build_user_from_dict
 from ..db import select_one
 
 
@@ -12,7 +12,7 @@ def user_find_by_username(username: str) -> User | None:
     )
 
     if result is not None:
-        return User(result)
+        return build_user_from_dict(result)
 
     return None
 
