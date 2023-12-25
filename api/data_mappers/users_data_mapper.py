@@ -12,7 +12,7 @@ def user_find_by_username(username: str) -> User | None:
     )
 
     if result is not None:
-        return User(result["user_id"], result["username"], result["password_hash"])
+        return User(result)
 
     return None
 
