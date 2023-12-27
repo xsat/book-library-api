@@ -20,10 +20,10 @@ def auth_login() -> dict:
     if found_user is None or not password_check(password, found_user.password_hash()):
         raise RuntimeError("Username or password are invalid")
 
-    new_user_token: UserToken = user_token_create_by_user(found_user)
+    user_token: UserToken = user_token_create_by_user(found_user)
 
     return {
-        "user_token": new_user_token
+        "user_token": user_token
     }
 
 

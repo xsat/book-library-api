@@ -6,11 +6,13 @@ from flask import g
 def select_one(query: str, args: tuple | dict | None = None) -> dict | None:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
-    cursor.execute(query, args)
 
-    result: dict = cursor.fetchone()
+    try:
+        cursor.execute(query, args)
 
-    cursor.close()
+        result: dict = cursor.fetchone()
+    finally:
+        cursor.close()
 
     return result
 
@@ -18,12 +20,16 @@ def select_one(query: str, args: tuple | dict | None = None) -> dict | None:
 def select_all(query: str, args: tuple | dict | None = None) -> list[dict]:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
-    cursor.execute(query, args)
 
-    result: list[dict] = []
+    try:
+        cursor.execute(query, args)
 
-    for row in cursor.fetchall():
-        result.append(row)
+        result: list[dict] = []
+
+        for row in cursor.fetchall():
+            result.append(row)
+    finally:
+        cursor.close()
 
     return result
 
@@ -31,11 +37,13 @@ def select_all(query: str, args: tuple | dict | None = None) -> list[dict]:
 def execute(query: str, args: tuple | dict | None = None) -> int | None:
     db: Connection = _get_db()
     cursor: Cursor = db.cursor()
-    cursor.execute(query, args)
 
-    last_id: int | None = cursor.lastrowid
+    try:
+        cursor.execute(query, args)
 
-    cursor.close()
+        last_id: int | None = cursor.lastrowid
+    finally:
+        cursor.close()
 
     return last_id
 
