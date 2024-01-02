@@ -3,7 +3,7 @@ from os import makedirs
 
 from .exeptions import ApiError
 
-from .json_provider import ModelJSONProvider
+from .json import ModelJSONProvider
 
 from .blueprint_controllers.auth_controller import auth_controller
 from .blueprint_controllers.authors_controller import authors_controller

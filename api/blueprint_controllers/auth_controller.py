@@ -29,7 +29,7 @@ def auth_login() -> dict:
     user_token: UserToken = user_token_create_by_user(found_user)
 
     return {
-        "user_token": user_token
+        "user_token": user_token,
     }
 
 

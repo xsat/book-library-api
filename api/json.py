@@ -1,11 +1,9 @@
 from flask.json.provider import DefaultJSONProvider
 from typing import Any, Callable
 
-from .models.base_model import BaseModel
-
 
 def _default(o: Any) -> Any:
-    if isinstance(o, BaseModel):
+    if isinstance(o, JsonSerializable):
         return o.json_serialize()
 
     return DefaultJSONProvider.default(o)
@@ -13,3 +11,8 @@ def _default(o: Any) -> Any:
 
 class ModelJSONProvider(DefaultJSONProvider):
     default: Callable[[Any], Any] = staticmethod(_default)
+
+
+class JsonSerializable:
+    def json_serialize(self) -> dict:
+        raise NotImplementedError

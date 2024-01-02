@@ -1,9 +1,9 @@
-from .models.base_model import BaseModel
+from .json import JsonSerializable
 
 from typing import final
 
 
-class ApiError(Exception, BaseModel):
+class ApiError(Exception, JsonSerializable):
     _code: int | None = None
     _message: str | None = None
 
