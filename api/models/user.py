@@ -2,6 +2,10 @@ from .base_model import BaseModel
 
 
 class User(BaseModel):
+    __user_id: int
+    __username: str
+    __password_hash: str
+
     def __init__(self,
                  user_id: int,
                  username: str,
@@ -24,7 +28,6 @@ class User(BaseModel):
             "user_id": self.__user_id,
             "username": self.__username
         }
-
 
 
 def build_user_from_dict(data: dict) -> User:

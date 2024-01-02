@@ -7,6 +7,8 @@ def select_one(query: str, args: tuple | dict | None = None) -> dict | None:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
 
+    print(query)
+
     try:
         cursor.execute(query, args)
 
@@ -44,6 +46,7 @@ def execute(query: str, args: tuple | dict | None = None) -> int | None:
         last_id: int | None = cursor.lastrowid
     finally:
         cursor.close()
+        db.commit()
 
     return last_id
 

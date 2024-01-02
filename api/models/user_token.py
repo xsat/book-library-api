@@ -5,6 +5,12 @@ from datetime import datetime
 
 
 class UserToken(BaseModel):
+    __user_token_id: int
+    __user_id: int
+    __access_token: str
+    __created_at: datetime
+    __expired_at: datetime
+
     def __init__(self,
                  user_token_id: int,
                  user_id: int,

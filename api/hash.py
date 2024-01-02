@@ -4,7 +4,7 @@ from string import printable
 
 
 def access_token_generate() -> str:
-    random_word: str = ''.join(choice(printable) for _i in range(40))
+    random_word: str = "".join(choice(printable) for _i in range(40))
 
     return password_generate(random_word)
 
