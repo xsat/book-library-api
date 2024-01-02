@@ -1,8 +1,8 @@
 from .base_model import BaseModel
+from ..datetime import from_mysql_datetime
 
 from datetime import datetime
 
-DATETIME_FORMAT: str = "%Y-%m-%d %H:%M:%S"
 
 class UserToken(BaseModel):
     def __init__(self,
@@ -50,6 +50,6 @@ def build_user_token_from_dict(data: dict) -> UserToken:
         data["user_token_id"],
         data["user_id"],
         data["access_token"],
-        datetime.strptime(data["created_at"], DATETIME_FORMAT),
-        datetime.strptime(data["expired_at"], DATETIME_FORMAT)
+        from_mysql_datetime(data["created_at"]),
+        from_mysql_datetime(data["expired_at"])
     )
