@@ -27,3 +27,7 @@ class ApiError(Exception, JsonSerializable):
 
 class BadRequestError(ApiError):
     _code: int = 400
+
+
+class UnauthorizedError(ApiError):
+    _code: int = 401
