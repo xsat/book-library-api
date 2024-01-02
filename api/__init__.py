@@ -1,7 +1,7 @@
 from flask import Flask
 from os import makedirs
 
-from werkzeug.exceptions import BadRequestKeyError
+from .exeptions import ApiError
 
 from .json_provider import ModelJSONProvider
 
@@ -17,14 +17,9 @@ def create_app() -> Flask:
     app.register_blueprint(books_controller)
     app.register_blueprint(authors_controller)
 
-    @app.errorhandler(BadRequestKeyError)
-    def bad_request_key_error_handler(error: BadRequestKeyError) -> tuple[dict, int]:
-        return {
-            "error": {
-                "message": error.name,
-                "code": error.code,
-            },
-        }, error.code
+    @app.errorhandler(ApiError)
+    def api_error_handler(error: ApiError) -> tuple[dict, int]:
+        return {"error": error}, error.code
 
     try:
         makedirs(app.instance_path)
