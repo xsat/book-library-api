@@ -41,8 +41,8 @@ def auth_login() -> dict:
 
 
 @auth_controller.route("/", methods=["DELETE"])
-def auth_logout() -> dict:
-    authorized_user: AuthorizedUser = authorize_user()
+@authorize_user
+def auth_logout(authorized_user: AuthorizedUser) -> dict:
     user_token_delete_by_authorized_user(authorized_user)
 
     return {}

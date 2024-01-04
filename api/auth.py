@@ -3,7 +3,8 @@ from .data_managers.users_data_manager import user_find_by_access_token
 from .models.user import User
 from .exeptions import UnauthorizedError
 
-from typing import Any
+from functools import wraps
+from typing import Callable, Any
 from flask import request
 
 
@@ -22,7 +23,16 @@ class AuthorizedUser:
         return self.__access_token
 
 
-def authorize_user() -> AuthorizedUser:
+def authorize_user(func: Callable) -> Callable:
+    @wraps(func)
+    def decorator(*args, **kwargs) -> Any:
+        kwargs["authorized_user"] = _get_authorized_user()
+        return func(*args, **kwargs)
+
+    return decorator
+
+
+def _get_authorized_user() -> AuthorizedUser:
     value: Any = request.headers.get("Authorization")
     if not isinstance(value, str):
         raise UnauthorizedError("Unauthorized")
@@ -34,7 +44,6 @@ def authorize_user() -> AuthorizedUser:
 
     found_user: User | None = user_find_by_access_token(access_token)
     if found_user is None:
-        raise UnauthorizedError("Unauthorized" + access_token)
+        raise UnauthorizedError("Unauthorized")
 
     return AuthorizedUser(found_user, access_token)
-
