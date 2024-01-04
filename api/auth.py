@@ -26,19 +26,18 @@ class AuthorizedUser:
 def authorize_user(func: Callable) -> Callable:
     @wraps(func)
     def decorator(*args, **kwargs) -> Any:
-        kwargs["authorized_user"] = _get_authorized_user()
+        kwargs["authorized_user"] = _find_authorized_user()
         return func(*args, **kwargs)
 
     return decorator
 
 
-def _get_authorized_user() -> AuthorizedUser:
+def _find_authorized_user() -> AuthorizedUser:
     value: Any = request.headers.get("Authorization")
     if not isinstance(value, str):
         raise UnauthorizedError("Unauthorized")
 
     scheme, _, access_token = value.partition(" ")
-
     if scheme != "Bearer":
         raise UnauthorizedError("Unauthorized")
 

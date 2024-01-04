@@ -1,11 +1,17 @@
-from .base_model import BaseModel
+from ._model import Model
+
+from datetime import datetime
 
 
-class Author(BaseModel):
+class Author(Model):
+    __author_id: int
+    __name: str
+    __created_at: datetime
+
     def __init__(self,
                  author_id: int,
                  name: str,
-                 created_at: str) -> None:
+                 created_at: datetime) -> None:
         self.__author_id = author_id
         self.__name = name
         self.__created_at = created_at

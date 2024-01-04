@@ -3,7 +3,7 @@ from MySQLdb import connect, Connection
 from flask import g
 
 
-def select_one(query: str, args: tuple | dict | None = None) -> dict | None:
+def query_one(query: str, args: tuple | dict | None = None) -> dict | None:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
 
@@ -19,7 +19,7 @@ def select_one(query: str, args: tuple | dict | None = None) -> dict | None:
     return result
 
 
-def select_all(query: str, args: tuple | dict | None = None) -> list[dict]:
+def query_all(query: str, args: tuple | dict | None = None) -> list[dict]:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
 

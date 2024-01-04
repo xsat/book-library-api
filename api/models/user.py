@@ -1,7 +1,7 @@
-from .base_model import BaseModel
+from ._model import Model
 
 
-class User(BaseModel):
+class User(Model):
     __user_id: int
     __username: str
     __password_hash: str
@@ -29,15 +29,3 @@ class User(BaseModel):
             "username": self.__username
         }
 
-
-def build_user_from_dict(data: dict) -> User:
-    if ("user_id" not in data
-            or "username" not in data
-            or "password_hash" not in data):
-        raise ValueError(data)
-
-    return User(
-        data["user_id"],
-        data["username"],
-        data["password_hash"]
-    )

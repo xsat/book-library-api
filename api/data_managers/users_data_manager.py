@@ -1,9 +1,9 @@
-from ..models.user import User, build_user_from_dict
-from ..db import select_one
+from ..models.user import User
+from ..db import query_one
 
 
 def user_find_by_username(username: str) -> User | None:
-    result = select_one(
+    result = query_one(
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u " +
         "WHERE u.`username` = %s " +
@@ -12,13 +12,13 @@ def user_find_by_username(username: str) -> User | None:
     )
 
     if result is not None:
-        return build_user_from_dict(result)
+        return _build_user_from_dict(result)
 
     return None
 
 
 def user_find_by_access_token(access_token: str) -> User | None:
-    result = select_one(
+    result = query_one(
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u "
         "INNER JOIN `user_tokens` AS ut " +
@@ -28,6 +28,19 @@ def user_find_by_access_token(access_token: str) -> User | None:
     )
 
     if result is not None:
-        return build_user_from_dict(result)
+        return _build_user_from_dict(result)
 
     return None
+
+
+def _build_user_from_dict(data: dict) -> User:
+    if ("user_id" not in data
+            or "username" not in data
+            or "password_hash" not in data):
+        raise ValueError(data)
+
+    return User(
+        data["user_id"],
+        data["username"],
+        data["password_hash"]
+    )

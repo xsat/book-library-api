@@ -1,5 +1,5 @@
 from ..json import JsonSerializable
 
 
-class BaseModel(JsonSerializable):
+class Model(JsonSerializable):
     pass

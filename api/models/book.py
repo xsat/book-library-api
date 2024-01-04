@@ -1,7 +1,7 @@
-from .base_model import BaseModel
+from ._model import Model
 
 
-class Book(BaseModel):
+class Book(Model):
     def __init__(self,
                  book_id: int,
                  user_id: int,
