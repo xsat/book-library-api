@@ -1,6 +1,8 @@
 from ..models.user import User
 from ..db import query_one
 
+from ..datetime import today_datetime, to_mysql_datetime
+
 
 def user_find_by_username(username: str) -> User | None:
     result = query_one(
@@ -17,14 +19,14 @@ def user_find_by_username(username: str) -> User | None:
     return None
 
 
-def user_find_by_access_token(access_token: str) -> User | None:
+def user_find_by_valid_access_token(access_token: str) -> User | None:
     result = query_one(
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u "
         "INNER JOIN `user_tokens` AS ut " +
-        "ON ut.`user_id` = u.`user_id` AND ut.`access_token` = %s " +
+        "ON ut.`user_id` = u.`user_id` AND ut.`access_token` = %s AND ut.`expired_at` <= %s" +
         "LIMIT 1",
-        (access_token, )
+        (access_token, to_mysql_datetime(today_datetime()))
     )
 
     if result is not None:

@@ -1,4 +1,4 @@
-from .data_managers.users_data_manager import user_find_by_access_token
+from .data_managers.users_data_manager import user_find_by_valid_access_token
 
 from .models.user import User
 from .exeptions import UnauthorizedError
@@ -41,7 +41,7 @@ def _find_authorized_user() -> AuthorizedUser:
     if scheme != "Bearer":
         raise UnauthorizedError("Unauthorized")
 
-    found_user: User | None = user_find_by_access_token(access_token)
+    found_user: User | None = user_find_by_valid_access_token(access_token)
     if found_user is None:
         raise UnauthorizedError("Unauthorized")
 
