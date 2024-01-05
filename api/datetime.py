@@ -20,8 +20,6 @@ def next_month_datetime() -> datetime:
     now: datetime = datetime.now()
 
     if now.month == 12:
-        now.replace(year=now.year + 1, month=1)
-    else:
-        now.replace(month=now.month + 1)
+        return now.replace(year=now.year + 1, month=1)
 
-    return now
+    return now.replace(month=now.month + 1)
