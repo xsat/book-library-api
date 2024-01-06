@@ -1,4 +1,4 @@
-from .data_managers.users_data_manager import user_find_by_valid_access_token
+from .mappers.users_mapper import user_find_by_valid_access_token
 
 from .models.user import User
 from .exeptions import UnauthorizedError

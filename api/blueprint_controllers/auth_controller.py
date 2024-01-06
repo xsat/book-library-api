@@ -7,8 +7,8 @@ from werkzeug.exceptions import UnsupportedMediaType
 
 from ..exeptions import BadRequestError
 
-from ..data_managers.users_data_manager import user_find_by_username
-from ..data_managers.user_tokens_data_manager import user_token_create_by_user, user_token_delete_by_authorized_user
+from ..mappers.users_mapper import user_find_by_username
+from ..mappers.user_tokens_mapper import user_token_create_by_user, user_token_delete_by_authorized_user
 from ..hash import password_check
 from ..models.user_token import UserToken
 
