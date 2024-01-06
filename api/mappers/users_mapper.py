@@ -24,7 +24,7 @@ def user_find_by_valid_access_token(access_token: str) -> User | None:
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u "
         "INNER JOIN `user_tokens` AS ut " +
-        "ON ut.`user_id` = u.`user_id` AND ut.`access_token` = %s AND ut.`expired_at` <= %s" +
+        "ON ut.`user_id` = u.`user_id` AND ut.`access_token` = %s AND ut.`expired_at` >= %s" +
         "LIMIT 1",
         (access_token, to_mysql_datetime(today_datetime()))
     )
