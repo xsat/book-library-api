@@ -1,8 +1,6 @@
 from flask import Blueprint
 from flask import request
 
-from werkzeug.exceptions import UnsupportedMediaType
-
 from ..exeptions import BadRequestError
 
 from ..mappers.users_mapper import user_find_by_username
@@ -19,11 +17,7 @@ auth_controller: Blueprint = Blueprint("auth_controller", __name__, url_prefix="
 
 @auth_controller.route("/", methods=["POST"])
 def auth_login() -> dict:
-    try:
-        login_binder: LoginBinder = LoginBinder(request)
-    except UnsupportedMediaType:
-        raise BadRequestError("Username or password are invalid")
-
+    login_binder: LoginBinder = LoginBinder(request)
     if not isinstance(login_binder.username, str):
         raise BadRequestError("Username or password are invalid")
 
