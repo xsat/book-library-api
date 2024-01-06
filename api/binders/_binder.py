@@ -1,12 +1,15 @@
 from flask import Request
 
-from typing import final
+from typing import final, Any
 
 
 class Binder:
     @final
     def __init__(self, request: Request) -> None:
-        self._assign(request)
+        json: Any = request.get_json(silent=True)
 
-    def _assign(self, request: Request) -> None:
+        if isinstance(json, dict):
+            self._assign(request.get_json(silent=True))
+
+    def _assign(self, json: dict) -> None:
         raise NotImplementedError

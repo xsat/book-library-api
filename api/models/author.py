@@ -4,10 +4,6 @@ from datetime import datetime
 
 
 class Author(Model):
-    __author_id: int
-    __name: str
-    __created_at: datetime
-
     def __init__(self,
                  author_id: int,
                  name: str,

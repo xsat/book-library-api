@@ -24,11 +24,11 @@ def auth_login() -> dict:
     except UnsupportedMediaType:
         raise BadRequestError("Username or password are invalid")
 
-    if not isinstance(login_binder.username(), str):
+    if not isinstance(login_binder.username, str):
         raise BadRequestError("Username or password are invalid")
 
-    found_user = user_find_by_username(login_binder.username())
-    if found_user is None or not password_check(login_binder.password(), found_user.password_hash()):
+    found_user = user_find_by_username(login_binder.username)
+    if found_user is None or not password_check(login_binder.password, found_user.password_hash):
         raise BadRequestError("Username or password are invalid")
 
     user_token: UserToken = user_token_create_by_user(found_user)

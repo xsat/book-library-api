@@ -9,16 +9,15 @@ from flask import request
 
 
 class AuthorizedUser:
-    __user: User
-    __access_token: str
-
     def __init__(self, user: User, access_token: str) -> None:
         self.__user = user
         self.__access_token = access_token
 
+    @property
     def user(self) -> User:
         return self.__user
 
+    @property
     def access_token(self) -> str:
         return self.__access_token
 
