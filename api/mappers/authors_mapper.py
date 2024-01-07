@@ -8,7 +8,7 @@ from ..binders.author_binder import AuthorBinder
 from datetime import datetime
 
 
-def author_create(author_binder: AuthorBinder, user: User) -> Author:
+def author_create_by_binder_and_user(author_binder: AuthorBinder, user: User) -> Author:
     created_at: datetime = today_datetime()
     author_id: int | None = execute(
         "INSERT INTO `authors` (`user_id`, `name`, `created_at`) " +
@@ -19,7 +19,7 @@ def author_create(author_binder: AuthorBinder, user: User) -> Author:
     return Author(author_id, user.user_id, author_binder.name, created_at)
 
 
-def author_name_update(author_binder: AuthorBinder, author: Author) -> None:
+def author_update_by_binder(author: Author, author_binder: AuthorBinder) -> None:
     updated_author: Author = Author(author.author_id, author.user_id, author_binder.name, author.created_at)
     author.assign(updated_author)
 
