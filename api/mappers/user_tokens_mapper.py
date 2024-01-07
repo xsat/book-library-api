@@ -15,7 +15,7 @@ def user_token_create_by_user(user: User) -> UserToken:
     expired_at: datetime = next_month_datetime()
     user_token_id: int | None = execute(
         "INSERT INTO `user_tokens` (`user_id`, `access_token`, `created_at`, `expired_at`) " +
-        "VALUES (%s, %s, %s, %s)",
+        "VALUE (%s, %s, %s, %s)",
         (user.user_id, access_token, to_mysql_datetime(created_at), to_mysql_datetime(expired_at))
     )
 

@@ -34,4 +34,3 @@ class User(Model):
             "user_id": self.user_id,
             "username": self.username,
         }
-
