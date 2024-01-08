@@ -6,7 +6,12 @@ from ..exeptions import BadRequestError, NotFoundError
 from ..models.author import Author
 from ..binders.author_binder import AuthorBinder
 from ..validators.author_validation import AuthorValidation
-from ..mappers.authors_mapper import author_create_by_binder_and_user, author_find_by_id_and_user
+from ..mappers.authors_mapper import (
+    author_create_by_binder_and_user,
+    author_find_by_id_and_user,
+    author_update_by_binder,
+    author_delete
+)
 
 
 authors_controller: Blueprint = Blueprint("authors_controller", __name__, url_prefix="/authors")
@@ -50,14 +55,31 @@ def authors_author_create(authorized_user: AuthorizedUser) -> dict:
 @authors_controller.route("/<int:author_id>", methods=["PUT"])
 @authorize_user
 def authors_author_update(author_id: int, authorized_user: AuthorizedUser) -> dict:
+    author: Author | None = author_find_by_id_and_user(author_id, authorized_user.user)
+    if author is None:
+        raise NotFoundError("Author not found")
+
+    author_binder: AuthorBinder = AuthorBinder(request)
+    author_validation: AuthorValidation = AuthorValidation(author_binder)
+    if not author_validation.is_valid():
+        raise BadRequestError(author_validation.error_message())
+
+    author_update_by_binder(author, author_binder)
+
     return {
-        "author_id": author_id
+        "author": author,
     }
 
 
 @authors_controller.route("/<int:author_id>", methods=["DELETE"])
 @authorize_user
 def authors_author_delete(author_id: int, authorized_user: AuthorizedUser) -> dict:
+    author: Author | None = author_find_by_id_and_user(author_id, authorized_user.user)
+    if author is None:
+        raise NotFoundError("Author not found")
+
+    author_delete(author)
+
     return {
-        "author_id": author_id
+        "author": None,
     }

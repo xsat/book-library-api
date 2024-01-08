@@ -34,7 +34,7 @@ class Author(Model):
     def assign(self, author: Self) -> None:
         self.__author_id = author.author_id
         self.__user_id = author.user_id
-        self.__name = author.username
+        self.__name = author.name
         self.__created_at = author.created_at
 
     def json_serialize(self) -> dict:

@@ -49,8 +49,8 @@ def author_update_by_binder(author: Author, author_binder: AuthorBinder) -> None
 def author_delete(author: Author) -> None:
     execute(
         "DELETE FROM `authors` AS a " +
-        "WHERE a.`author_id` = %s",
-        (author.author_id, )
+        "WHERE a.`author_id` = %s AND a.`user_id` = %s",
+        (author.author_id, author.user_id)
     )
 
 
