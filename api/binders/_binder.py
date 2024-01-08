@@ -1,5 +1,4 @@
 from flask import Request
-
 from typing import final, Any
 
 
@@ -13,14 +12,15 @@ def _prepare_value(value: Any) -> Any:
 class Binder:
     @final
     def __init__(self, request: Request) -> None:
+        values: dict = request.values.to_dict()
         json: Any = request.get_json(silent=True)
         if isinstance(json, dict):
-            for key, value in json.items():
-                json[key] = _prepare_value(value)
+            values.update(json)
 
-            self._assign(json)
-        else:
-            self._assign({})
+        for key, value in values.items():
+            values[key] = _prepare_value(value)
 
-    def _assign(self, json: dict) -> None:
+        self._assign(values)
+
+    def _assign(self, values: dict) -> None:
         raise NotImplementedError

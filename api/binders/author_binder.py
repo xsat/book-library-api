@@ -1,12 +1,13 @@
-from typing import Any
-
 from ._binder import Binder
 
 
 class AuthorBinder(Binder):
-    def _assign(self, json: dict) -> None:
-        self.__name = json.get("name")
+    def _assign(self, values: dict) -> None:
+        self.__name = values.get("name")
 
     @property
-    def name(self) -> Any:
-        return self.__name
+    def name(self) -> str:
+        if self.__name is None:
+            return ""
+
+        return str(self.__name)
