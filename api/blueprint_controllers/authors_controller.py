@@ -4,9 +4,11 @@ from ..auth import authorize_user, AuthorizedUser
 from ..exeptions import BadRequestError, NotFoundError
 
 from ..models.author import Author
+from ..binders.list_binder import ListBinder
 from ..binders.author_binder import AuthorBinder
 from ..validators.author_validation import AuthorValidation
 from ..mappers.authors_mapper import (
+    authors_find_by_binder_and_user,
     author_create_by_binder_and_user,
     author_find_by_id_and_user,
     author_update_by_binder,
@@ -20,8 +22,13 @@ authors_controller: Blueprint = Blueprint("authors_controller", __name__, url_pr
 @authors_controller.route("/", methods=["GET"])
 @authorize_user
 def authors_list(authorized_user: AuthorizedUser) -> dict:
+    list_binder: ListBinder = ListBinder(request)
+    authors: list[Author] = authors_find_by_binder_and_user(list_binder, authorized_user.user)
+
     return {
-        "list": []
+        "offset": list_binder.offset,
+        "limit": list_binder.limit,
+        "list": authors,
     }
 
 

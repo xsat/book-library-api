@@ -2,7 +2,6 @@ from flask import Flask
 from os import makedirs
 
 from .exeptions import ApiError
-
 from .json import ModelJSONProvider
 
 from .blueprint_controllers.auth_controller import auth_controller

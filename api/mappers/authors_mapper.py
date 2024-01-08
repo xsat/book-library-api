@@ -2,10 +2,28 @@ from ..models.author import Author
 from ..models.user import User
 from ..db import query_one, query_all, execute
 from ..datetime import today_datetime, to_mysql_datetime
+from ..binders.list_binder import ListBinder
 from ..binders.author_binder import AuthorBinder
 
 
 from datetime import datetime
+
+
+def authors_find_by_binder_and_user(list_binder: ListBinder, user: User) -> list[Author]:
+    results = query_all(
+        "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +
+        "FROM `authors` AS a "
+        "WHERE a.`user_id` = %s " +
+        "LIMIT %s OFFSET %s",
+        (user.user_id, list_binder.limit, list_binder.offset)
+    )
+
+    authors: list[Author] = []
+
+    for item in results:
+        authors.append(_build_author_from_dict(item))
+
+    return authors
 
 
 def author_find_by_id_and_user(author_id: int, user: User) -> Author | None:
