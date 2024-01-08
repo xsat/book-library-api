@@ -1,11 +1,26 @@
 from ..models.author import Author
 from ..models.user import User
 from ..db import query_one, query_all, execute
-from ..datetime import today_datetime, to_mysql_datetime, from_mysql_datetime
+from ..datetime import today_datetime, to_mysql_datetime
 from ..binders.author_binder import AuthorBinder
 
 
 from datetime import datetime
+
+
+def author_find_by_id_and_user(author_id: int, user: User) -> Author | None:
+    result = query_one(
+        "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +
+        "FROM `authors` AS a "
+        "WHERE a.`author_id` = %s AND a.`user_id` = %s " +
+        "LIMIT 1",
+        (author_id, user.user_id)
+    )
+
+    if result is not None:
+        return _build_author_from_dict(result)
+
+    return None
 
 
 def author_create_by_binder_and_user(author_binder: AuthorBinder, user: User) -> Author:
@@ -50,5 +65,5 @@ def _build_author_from_dict(data: dict) -> Author:
         data["author_id"],
         data["user_id"],
         data["name"],
-        from_mysql_datetime(data["created_at"])
+        data["created_at"]
     )

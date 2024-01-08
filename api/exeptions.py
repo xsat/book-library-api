@@ -31,3 +31,7 @@ class BadRequestError(ApiError):
 
 class UnauthorizedError(ApiError):
     _code: int = 401
+
+
+class NotFoundError(ApiError):
+    _code: int = 404

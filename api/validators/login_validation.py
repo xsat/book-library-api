@@ -13,7 +13,12 @@ class LoginValidation(Validation):
         self.__bind_user = bind_user
 
     def is_valid(self) -> bool:
-        if not isinstance(self.__login_binder.username, str) or not isinstance(self.__login_binder.password, str):
+        if (not isinstance(self.__login_binder.username, str)
+                or not self._is_length_valid(self.__login_binder.username)):
+            return False
+
+        if (not isinstance(self.__login_binder.password, str)
+                or not self._is_length_valid(self.__login_binder.password)):
             return False
 
         found_user = user_find_by_username(self.__login_binder.username)

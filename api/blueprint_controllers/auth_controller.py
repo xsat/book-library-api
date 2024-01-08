@@ -1,16 +1,13 @@
-from flask import Blueprint
-from flask import request
-
-from ..exeptions import BadRequestError
-
-from ..mappers.user_tokens_mapper import user_token_create_by_user, user_token_delete_by_authorized_user
-from ..models.user_token import UserToken
-from ..models.user import User
-from ..binders.login_binder import LoginBinder
+from flask import Blueprint, request
 
 from ..auth import authorize_user, AuthorizedUser
+from ..exeptions import BadRequestError
 
+from ..models.user import User
+from ..models.user_token import UserToken
+from ..binders.login_binder import LoginBinder
 from ..validators.login_validation import LoginValidation
+from ..mappers.user_tokens_mapper import user_token_create_by_user, user_token_delete_by_authorized_user
 
 
 auth_controller: Blueprint = Blueprint("auth_controller", __name__, url_prefix="/auth")
@@ -36,4 +33,6 @@ def auth_login() -> dict:
 def auth_logout(authorized_user: AuthorizedUser) -> dict:
     user_token_delete_by_authorized_user(authorized_user)
 
-    return {}
+    return {
+        "user_token": None,
+    }
