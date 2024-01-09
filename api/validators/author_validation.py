@@ -8,8 +8,7 @@ class AuthorValidation(Validation):
         self.__author_binder = author_binder
 
     def is_valid(self) -> bool:
-        if (not isinstance(self.__author_binder.name, str)
-                or not self._is_length_valid(self.__author_binder.name)):
+        if not self._is_length_valid(self.__author_binder.name):
             return False
 
         return True
