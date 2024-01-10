@@ -26,6 +26,20 @@ def authors_find_by_binder_and_user(list_binder: ListBinder, user: User) -> list
     return authors
 
 
+def authors_total_by_binder_and_user(list_binder: ListBinder, user: User) -> int:
+    result = query_one(
+        "SELECT COUNT(a.`author_id`) AS `count` " +
+        "FROM `authors` AS a "
+        "WHERE a.`user_id` = %s",
+        (user.user_id, )
+    )
+
+    if result is not None and "count" in result:
+        return result['count']
+
+    return 0
+
+
 def author_find_by_id_and_user(author_id: int, user: User) -> Author | None:
     result = query_one(
         "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +

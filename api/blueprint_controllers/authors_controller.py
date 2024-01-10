@@ -9,6 +9,7 @@ from ..binders.author_binder import AuthorBinder
 from ..validators.author_validation import AuthorValidation
 from ..mappers.authors_mapper import (
     authors_find_by_binder_and_user,
+    authors_total_by_binder_and_user,
     author_create_by_binder_and_user,
     author_find_by_id_and_user,
     author_update_by_binder,
@@ -24,11 +25,13 @@ authors_controller: Blueprint = Blueprint("authors_controller", __name__, url_pr
 def authors_list(authorized_user: AuthorizedUser) -> dict:
     list_binder: ListBinder = ListBinder(request)
     authors: list[Author] = authors_find_by_binder_and_user(list_binder, authorized_user.user)
+    total: int = authors_total_by_binder_and_user(list_binder, authorized_user.user)
 
     return {
-        "offset": list_binder.offset,
+        "items": authors,
         "limit": list_binder.limit,
-        "list": authors,
+        "offset": list_binder.offset,
+        "total": total,
     }
 
 
