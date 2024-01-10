@@ -47,10 +47,10 @@ def authors_list(authorized_user: AuthorizedUser) -> dict:
 def authors_author(author_id: int, authorized_user: AuthorizedUser) -> dict:
     author: Author | None = author_find_by_id_and_user(author_id, authorized_user.user)
     if author is None:
-        raise NotFoundError("Author not found")
+        raise NotFoundError()
 
     return {
-        "author": author
+        "author": author,
     }
 
 
@@ -74,7 +74,7 @@ def authors_author_create(authorized_user: AuthorizedUser) -> dict:
 def authors_author_update(author_id: int, authorized_user: AuthorizedUser) -> dict:
     author: Author | None = author_find_by_id_and_user(author_id, authorized_user.user)
     if author is None:
-        raise NotFoundError("Author not found")
+        raise NotFoundError()
 
     author_binder: AuthorBinder = AuthorBinder(request)
     author_validation: AuthorValidation = AuthorValidation(author_binder)
@@ -93,7 +93,7 @@ def authors_author_update(author_id: int, authorized_user: AuthorizedUser) -> di
 def authors_author_delete(author_id: int, authorized_user: AuthorizedUser) -> dict:
     author: Author | None = author_find_by_id_and_user(author_id, authorized_user.user)
     if author is None:
-        raise NotFoundError("Author not found")
+        raise NotFoundError()
 
     author_delete(author)
 

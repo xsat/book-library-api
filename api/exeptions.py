@@ -10,7 +10,8 @@ class ApiError(Exception, JsonSerializable):
     def __init__(self, message: str | None = None, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        self._message = message
+        if message is not None:
+            self._message = message
 
     @final
     @property
@@ -31,7 +32,9 @@ class BadRequestError(ApiError):
 
 class UnauthorizedError(ApiError):
     _code: int = 401
+    _message: str = "unauthorized"
 
 
 class NotFoundError(ApiError):
     _code: int = 404
+    _message: str = "not_found"

@@ -34,14 +34,14 @@ def authorize_user(func: Callable) -> Callable:
 def _find_authorized_user() -> AuthorizedUser:
     value: Any = request.headers.get("Authorization")
     if not isinstance(value, str):
-        raise UnauthorizedError("Unauthorized")
+        raise UnauthorizedError()
 
     scheme, _, access_token = value.partition(" ")
     if scheme != "Bearer":
-        raise UnauthorizedError("Unauthorized")
+        raise UnauthorizedError()
 
     found_user: User | None = user_find_by_valid_access_token(access_token)
     if found_user is None:
-        raise UnauthorizedError("Unauthorized")
+        raise UnauthorizedError()
 
     return AuthorizedUser(found_user, access_token)
