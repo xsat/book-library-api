@@ -11,6 +11,7 @@ def _default(o: Any) -> Any:
 
 class ModelJSONProvider(DefaultJSONProvider):
     default: Callable[[Any], Any] = staticmethod(_default)
+    sort_keys = False
 
 
 class JsonSerializable:

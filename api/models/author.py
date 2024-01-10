@@ -41,4 +41,5 @@ class Author(Model):
         return {
             "author_id": self.author_id,
             "name": self.name,
+            "created_at": self.created_at,
         }

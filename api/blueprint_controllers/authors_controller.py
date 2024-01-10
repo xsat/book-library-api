@@ -6,6 +6,7 @@ from ..exeptions import BadRequestError, NotFoundError
 from ..models.author import Author
 from ..binders.list_binder import ListBinder
 from ..binders.author_binder import AuthorBinder
+from ..validators.list_validation import ListValidation
 from ..validators.author_validation import AuthorValidation
 from ..mappers.authors_mapper import (
     authors_find_by_binder_and_user,
@@ -24,14 +25,20 @@ authors_controller: Blueprint = Blueprint("authors_controller", __name__, url_pr
 @authorize_user
 def authors_list(authorized_user: AuthorizedUser) -> dict:
     list_binder: ListBinder = ListBinder(request)
+    list_validation: ListValidation = ListValidation(list_binder)
+    if not list_validation.is_valid():
+        raise BadRequestError(list_validation.error_message())
+
     authors: list[Author] = authors_find_by_binder_and_user(list_binder, authorized_user.user)
     total: int = authors_total_by_binder_and_user(list_binder, authorized_user.user)
 
     return {
-        "items": authors,
-        "limit": list_binder.limit,
+        "sort": list_binder.sort,
+        "order": list_binder.order,
         "offset": list_binder.offset,
+        "limit": list_binder.limit,
         "total": total,
+        "items": authors,
     }
 
 
