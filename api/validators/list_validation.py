@@ -14,4 +14,4 @@ class ListValidation(Validation):
         return True
 
     def error_message(self) -> str:
-        return "Search is invalid"
+        return "invalid_search"

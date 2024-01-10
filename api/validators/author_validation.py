@@ -14,4 +14,4 @@ class AuthorValidation(Validation):
         return True
 
     def error_message(self) -> str:
-        return "Name is invalid"
+        return "invalid_name"

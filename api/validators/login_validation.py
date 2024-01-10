@@ -28,4 +28,4 @@ class LoginValidation(Validation):
         return True
 
     def error_message(self) -> str:
-        return "Username or password are invalid"
+        return "invalid_username_password"
