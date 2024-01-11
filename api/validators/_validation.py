@@ -15,3 +15,10 @@ class Validation:
             return False
 
         return True
+
+    @final
+    def _is_numeric_valid(self, value: int, min_value: int = 0, max_value: int = 999_999) -> bool:
+        if value < min_value or value > max_value:
+            return False
+
+        return True
