@@ -33,8 +33,8 @@ def authors_list(authorized_user: AuthorizedUser) -> dict:
     total: int = authors_total_by_binder_and_user(list_binder, authorized_user.user)
 
     return {
-        "sort": list_binder.sort,
         "order": list_binder.order,
+        "sort": list_binder.sort,
         "offset": list_binder.offset,
         "limit": list_binder.limit,
         "total": total,

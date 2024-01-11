@@ -1,6 +1,6 @@
 from ._validation import Validation
 
-from ..binders.list_binder import ListBinder, SORT_ALLOWED_VALUES, ORDER_ALLOWED_VALUES
+from ..binders.list_binder import ListBinder, ORDER_ALLOWED_VALUES, SORT_ALLOWED_VALUES
 
 
 class ListValidation(Validation):
@@ -10,8 +10,13 @@ class ListValidation(Validation):
         self.__list_binder = list_binder
 
     def is_valid(self) -> bool:
-        if self.__list_binder.sort.lower() not in SORT_ALLOWED_VALUES:
-            self.__error_message = "invalid_sort"
+        if not self._is_numeric_valid(self.__list_binder.offset):
+            self.__error_message = "invalid_offset"
+
+            return False
+
+        if not self._is_numeric_valid(self.__list_binder.limit):
+            self.__error_message = "invalid_limit"
 
             return False
 
@@ -20,18 +25,13 @@ class ListValidation(Validation):
 
             return False
 
+        if self.__list_binder.sort.lower() not in SORT_ALLOWED_VALUES:
+            self.__error_message = "invalid_sort"
+
+            return False
+
         if not self._is_length_valid(self.__list_binder.search, min_length=0):
             self.__error_message = "invalid_search"
-
-            return False
-
-        if not self._is_numeric_valid(self.__list_binder.offset):
-            self.__error_message = "invalid_offset"
-
-            return False
-
-        if not self._is_numeric_valid(self.__list_binder.limit):
-            self.__error_message = "invalid_limit"
 
             return False
 
