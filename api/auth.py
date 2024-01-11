@@ -1,11 +1,10 @@
-from .mappers.users_mapper import user_find_by_valid_access_token
-
-from .models.user import User
-from .exeptions import UnauthorizedError
-
+from flask import request
 from functools import wraps
 from typing import Callable, Any
-from flask import request
+
+from .exeptions import UnauthorizedError
+from .models.user import User
+from .mappers.users_mapper import user_find_by_valid_access_token
 
 
 class AuthorizedUser:

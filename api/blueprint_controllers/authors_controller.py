@@ -2,7 +2,6 @@ from flask import Blueprint, request
 
 from ..auth import authorize_user, AuthorizedUser
 from ..exeptions import BadRequestError, NotFoundError
-
 from ..models.author import Author
 from ..binders.list_binder import ListBinder
 from ..binders.author_binder import AuthorBinder

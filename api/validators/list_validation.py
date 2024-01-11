@@ -1,5 +1,4 @@
 from ._validation import Validation
-
 from ..binders.list_binder import ListBinder, ORDER_ALLOWED_VALUES, SORT_ALLOWED_VALUES
 
 

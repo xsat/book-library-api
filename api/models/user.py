@@ -1,6 +1,6 @@
-from ._model import Model
-
 from typing import Self
+
+from ._model import Model
 
 
 class User(Model):

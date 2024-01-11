@@ -1,5 +1,4 @@
 from ._validation import Validation
-
 from ..binders.author_binder import AuthorBinder
 
 

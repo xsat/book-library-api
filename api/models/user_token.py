@@ -1,6 +1,6 @@
-from ._model import Model
-
 from datetime import datetime
+
+from ._model import Model
 
 
 class UserToken(Model):

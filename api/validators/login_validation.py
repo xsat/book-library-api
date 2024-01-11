@@ -1,9 +1,7 @@
 from ._validation import Validation
-
+from ..hash import password_check
 from ..binders.login_binder import LoginBinder
 from ..mappers.users_mapper import user_find_by_username
-from ..hash import password_check
-
 from ..models.user import User
 
 

@@ -1,5 +1,5 @@
-from flask.json.provider import DefaultJSONProvider
 from typing import Any, Callable
+from flask.json.provider import DefaultJSONProvider
 
 
 def _default(o: Any) -> Any:

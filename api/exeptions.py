@@ -1,6 +1,6 @@
-from .json import JsonSerializable
-
 from typing import final
+
+from .json import JsonSerializable
 
 
 class ApiError(Exception, JsonSerializable):

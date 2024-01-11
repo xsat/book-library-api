@@ -2,7 +2,6 @@ from flask import Blueprint, request
 
 from ..auth import authorize_user, AuthorizedUser
 from ..exeptions import BadRequestError
-
 from ..models.user import User
 from ..models.user_token import UserToken
 from ..binders.login_binder import LoginBinder

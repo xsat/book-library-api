@@ -1,6 +1,6 @@
-from MySQLdb.cursors import Cursor, DictCursor
-from MySQLdb import connect, Connection
 from flask import g
+from MySQLdb import connect, Connection
+from MySQLdb.cursors import Cursor, DictCursor
 
 
 def query_one(query: str, args: tuple | dict | None = None) -> dict | None:

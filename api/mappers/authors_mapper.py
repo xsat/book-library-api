@@ -1,12 +1,11 @@
-from ..models.author import Author
-from ..models.user import User
+from datetime import datetime
+
 from ..db import query_one, query_all, execute
 from ..datetime import today_datetime, to_mysql_datetime
+from ..models.user import User
+from ..models.author import Author
 from ..binders.list_binder import ListBinder
 from ..binders.author_binder import AuthorBinder
-
-
-from datetime import datetime
 
 
 def authors_find_by_binder_and_user(list_binder: ListBinder, user: User) -> list[Author]:
@@ -14,8 +13,9 @@ def authors_find_by_binder_and_user(list_binder: ListBinder, user: User) -> list
         "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +
         "FROM `authors` AS a "
         "WHERE a.`user_id` = %s " +
+        "ORDER BY %s %s " +
         "LIMIT %s OFFSET %s",
-        (user.user_id, list_binder.limit, list_binder.offset)
+        (user.user_id, list_binder.order, list_binder.sort, list_binder.limit, list_binder.offset)
     )
 
     authors: list[Author] = []

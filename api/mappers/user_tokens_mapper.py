@@ -1,12 +1,11 @@
+from datetime import datetime
+
+from ..db import execute
+from ..auth import AuthorizedUser
+from ..hash import access_token_generate
+from ..datetime import today_datetime, next_month_datetime, to_mysql_datetime
 from ..models.user import User
 from ..models.user_token import UserToken
-from ..hash import access_token_generate
-from ..db import execute
-from ..datetime import today_datetime, next_month_datetime, to_mysql_datetime
-
-from ..auth import AuthorizedUser
-
-from datetime import datetime
 
 
 def user_token_create_by_user(user: User) -> UserToken:

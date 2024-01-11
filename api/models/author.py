@@ -1,7 +1,7 @@
-from ._model import Model
-
-from datetime import datetime
 from typing import Self
+from datetime import datetime
+
+from ._model import Model
 
 
 class Author(Model):

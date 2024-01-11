@@ -1,7 +1,6 @@
-from ..models.user import User
 from ..db import query_one
-
 from ..datetime import today_datetime, to_mysql_datetime
+from ..models.user import User
 
 
 def user_find_by_username(username: str) -> User | None:
