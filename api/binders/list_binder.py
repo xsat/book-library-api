@@ -3,11 +3,11 @@ from ._binder import Binder
 
 _ORDER_CREATED_AT: str = "created_at"
 
-_SORT_DESC: str = "desc"
-_SORT_ASC: str = "asc"
+_SORT_DESC: str = "DESC"
+_SORT_ASK: str = "ASK"
 
 ORDER_ALLOWED_VALUES: list[str] = [_ORDER_CREATED_AT]
-SORT_ALLOWED_VALUES: list[str] = [_SORT_DESC, _SORT_ASC]
+SORT_ALLOWED_VALUES: list[str] = [_SORT_DESC, _SORT_ASK]
 
 
 class ListBinder(Binder):
@@ -19,18 +19,18 @@ class ListBinder(Binder):
         self.__search = values.get("search")
 
     @property
-    def sort(self) -> str:
-        if self.__sort is None:
-            return ""
-
-        return str(self.__sort)
-
-    @property
     def order(self) -> str:
         if self.__order is None:
             return ""
 
-        return str(self.__order)
+        return str(self.__order).strip().lower()
+
+    @property
+    def sort(self) -> str:
+        if self.__sort is None:
+            return ""
+
+        return str(self.__sort).strip().upper()
 
     @property
     def offset(self) -> int:
@@ -51,4 +51,4 @@ class ListBinder(Binder):
         if self.__search is None:
             return ""
 
-        return str(self.__search)
+        return str(self.__search).strip()

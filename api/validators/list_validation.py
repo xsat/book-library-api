@@ -20,12 +20,12 @@ class ListValidation(Validation):
 
             return False
 
-        if self.__list_binder.order.lower() not in ORDER_ALLOWED_VALUES:
+        if self.__list_binder.order not in ORDER_ALLOWED_VALUES:
             self.__error_message = "invalid_order"
 
             return False
 
-        if self.__list_binder.sort.lower() not in SORT_ALLOWED_VALUES:
+        if self.__list_binder.sort not in SORT_ALLOWED_VALUES:
             self.__error_message = "invalid_sort"
 
             return False
