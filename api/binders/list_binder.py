@@ -4,10 +4,10 @@ from ._binder import Binder
 _ORDER_CREATED_AT: str = "created_at"
 
 _SORT_DESC: str = "DESC"
-_SORT_ASK: str = "ASK"
+_SORT_ASC: str = "ASC"
 
 ORDER_ALLOWED_VALUES: list[str] = [_ORDER_CREATED_AT]
-SORT_ALLOWED_VALUES: list[str] = [_SORT_DESC, _SORT_ASK]
+SORT_ALLOWED_VALUES: list[str] = [_SORT_DESC, _SORT_ASC]
 
 
 class ListBinder(Binder):

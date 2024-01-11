@@ -4,7 +4,7 @@ from ..models.user import User
 
 
 def user_find_by_username(username: str) -> User | None:
-    result = query_one(
+    result: dict | None = query_one(
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u " +
         "WHERE u.`username` = %s " +
@@ -19,7 +19,7 @@ def user_find_by_username(username: str) -> User | None:
 
 
 def user_find_by_valid_access_token(access_token: str) -> User | None:
-    result = query_one(
+    result: dict | None = query_one(
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u "
         "INNER JOIN `user_tokens` AS ut " +

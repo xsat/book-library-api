@@ -9,14 +9,25 @@ from ..binders.author_binder import AuthorBinder
 
 
 def authors_find_by_binder_and_user(list_binder: ListBinder, user: User) -> list[Author]:
-    results = query_all(
-        "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +
-        "FROM `authors` AS a "
-        "WHERE a.`user_id` = %s " +
-        "ORDER BY %s %s " +
-        "LIMIT %s OFFSET %s",
-        (user.user_id, list_binder.order, list_binder.sort, list_binder.limit, list_binder.offset)
+    select_query: str = "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at`"
+    from_query: str = "FROM `authors` AS a"
+    where_query: str = "WHERE a.`user_id` = %s"
+    args: tuple = (user.user_id, )
+
+    if len(list_binder.search) > 0:
+        where_query = f"{where_query} AND a.`name` LIKE %s"
+        args = args + (f"%{list_binder.search}%", )
+
+    order_query: str = f"ORDER BY a.`{list_binder.order}` {list_binder.sort}"
+    limit_offset_query: str = "LIMIT %s OFFSET %s"
+    args = args + (list_binder.limit, list_binder.offset)
+
+    results: list[dict] = query_all(
+        f"{select_query} {from_query} {where_query} {order_query} {limit_offset_query}",
+        args
     )
+
+    print(results)
 
     authors: list[Author] = []
 
@@ -27,11 +38,18 @@ def authors_find_by_binder_and_user(list_binder: ListBinder, user: User) -> list
 
 
 def authors_total_by_binder_and_user(list_binder: ListBinder, user: User) -> int:
-    result = query_one(
-        "SELECT COUNT(a.`author_id`) AS `count` " +
-        "FROM `authors` AS a "
-        "WHERE a.`user_id` = %s",
-        (user.user_id, )
+    select_query: str = "SELECT COUNT(a.`author_id`) AS `count`"
+    from_query: str = "FROM `authors` AS a"
+    where_query: str = "WHERE a.`user_id` = %s"
+    args: tuple = (user.user_id,)
+
+    if len(list_binder.search) > 0:
+        where_query = f"{where_query} AND a.`name` LIKE %s"
+        args = args + (f"%{list_binder.search}%",)
+
+    result: dict | None = query_one(
+        f"{select_query} {from_query} {where_query}",
+        args
     )
 
     if result is not None and "count" in result:
@@ -41,7 +59,7 @@ def authors_total_by_binder_and_user(list_binder: ListBinder, user: User) -> int
 
 
 def author_find_by_id_and_user(author_id: int, user: User) -> Author | None:
-    result = query_one(
+    result: dict | None = query_one(
         "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +
         "FROM `authors` AS a "
         "WHERE a.`author_id` = %s AND a.`user_id` = %s " +
@@ -74,7 +92,7 @@ def author_update_by_binder(author: Author, author_binder: AuthorBinder) -> None
         "UPDATE `authors` AS a " +
         "SET a.`name` = %s " +
         "WHERE a.`author_id` = %s",
-        (author.name, author.author_id, )
+        (author.name, author.author_id,)
     )
 
 
