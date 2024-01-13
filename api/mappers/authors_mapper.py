@@ -61,7 +61,7 @@ def authors_total_by_binder_and_user(list_binder: ListBinder, user: User) -> int
 def author_find_by_id_and_user(author_id: int, user: User) -> Author | None:
     result: dict | None = query_one(
         "SELECT a.`author_id`, a.`user_id`, a.`name`, a.`created_at` " +
-        "FROM `authors` AS a "
+        "FROM `authors` AS a " +
         "WHERE a.`author_id` = %s AND a.`user_id` = %s " +
         "LIMIT 1",
         (author_id, user.user_id)
@@ -91,8 +91,8 @@ def author_update_by_binder(author: Author, author_binder: AuthorBinder) -> None
     execute(
         "UPDATE `authors` AS a " +
         "SET a.`name` = %s " +
-        "WHERE a.`author_id` = %s",
-        (author.name, author.author_id,)
+        "WHERE a.`author_id` = %s AND a.`user_id` = %s",
+        (author.name, author.author_id, author.user_id)
     )
 
 
