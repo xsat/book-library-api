@@ -43,7 +43,7 @@ def authors_list(authorized_user: AuthorizedUser) -> dict:
 
 @authors_controller.route("/<int:author_id>", methods=["GET"])
 @authorize_user
-def authors_author(author_id: int, authorized_user: AuthorizedUser) -> dict:
+def authors_author_get(author_id: int, authorized_user: AuthorizedUser) -> dict:
     author: Author | None = author_find_by_id_and_user(author_id, authorized_user.user)
     if author is None:
         raise NotFoundError()

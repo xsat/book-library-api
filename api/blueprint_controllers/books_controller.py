@@ -43,7 +43,7 @@ def books_list(authorized_user: AuthorizedUser) -> dict:
 
 @books_controller.route("/<int:book_id>", methods=["GET"])
 @authorize_user
-def books_book(book_id: int, authorized_user: AuthorizedUser) -> dict:
+def books_book_get(book_id: int, authorized_user: AuthorizedUser) -> dict:
     book: Book | None = book_find_by_id_and_user(book_id, authorized_user.user)
     if book is None:
         raise NotFoundError()
