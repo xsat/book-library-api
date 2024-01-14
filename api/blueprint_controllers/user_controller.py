@@ -45,7 +45,7 @@ def user_get(authorized_user: AuthorizedUser) -> dict:
 @authorize_user
 def user_update(authorized_user: AuthorizedUser) -> dict:
     user_binder: UserBinder = UserBinder(request)
-    user_validation: UserValidation = UserValidation(user_binder)
+    user_validation: UserValidation = UserValidation(user_binder, authorized_user.user)
     if not user_validation.is_valid():
         raise BadRequestError(user_validation.error_message())
 
