@@ -54,7 +54,7 @@ def user_update_by_binder(user: User, user_binder: UserBinder) -> None:
 
     execute(
         "UPDATE `users` AS u " +
-        "SET u.`name` = %s, u.`password_hash` = %s " +
+        "SET u.`username` = %s, u.`password_hash` = %s " +
         "WHERE u.`user_id` = %s",
         (user.username, password_hash, user.user_id)
     )
