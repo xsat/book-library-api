@@ -44,7 +44,7 @@ class Book(Model):
         self.__pages = book.pages
         self.__created_at = book.created_at
 
-    def json_serialize(self) -> dict:
+    def json_serialize(self) -> dict[str, int | str | datetime]:
         return {
             "book_id": self.book_id,
             "title": self.title,

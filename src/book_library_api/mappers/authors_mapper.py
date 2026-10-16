@@ -4,6 +4,7 @@ from ..binders.author_binder import AuthorBinder
 from ..binders.list_binder import ListBinder
 from ..datetime import to_mysql_datetime, today_datetime
 from ..db import execute, query_all, query_one
+from ..exeptions import InternalServerError
 from ..models.author import Author
 from ..models.user import User
 
@@ -80,6 +81,9 @@ def author_create_by_binder_and_user(author_binder: AuthorBinder, user: User) ->
         "VALUE (%s, %s, %s)",
         (user.user_id, author_binder.name, to_mysql_datetime(created_at))
     )
+    
+    if author_id is None:
+        raise InternalServerError("author_id is not created")
 
     return Author(author_id, user.user_id, author_binder.name, created_at)
 

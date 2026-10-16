@@ -19,7 +19,7 @@ def main() -> Flask:
     app.register_blueprint(user_controller)
 
     @app.errorhandler(ApiError)
-    def api_error_handler(error: ApiError) -> tuple[dict, int]:
+    def api_error_handler(error: ApiError) -> tuple[dict[str, ApiError], int]:
         return {"error": error}, error.code
 
     try:

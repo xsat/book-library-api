@@ -5,7 +5,7 @@ from MySQLdb import Connection, connect
 from MySQLdb.cursors import Cursor, DictCursor
 
 
-def query_one(query: str, args: tuple[Any] | dict[str, Any] | None = None) -> dict[str, Any] | None:
+def query_one(query: str, args: tuple[Any, ...] | dict[str, Any] | None = None) -> dict[str, Any] | None:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
 
@@ -19,7 +19,7 @@ def query_one(query: str, args: tuple[Any] | dict[str, Any] | None = None) -> di
     return result
 
 
-def query_all(query: str, args: tuple[Any] | dict[str, Any] | None = None) -> list[dict[str, Any]]:
+def query_all(query: str, args: tuple[Any, ...] | dict[str, Any] | None = None) -> list[dict[str, Any]]:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
 
@@ -33,7 +33,7 @@ def query_all(query: str, args: tuple[Any] | dict[str, Any] | None = None) -> li
     return result
 
 
-def execute(query: str, args: tuple[Any] | dict[str, Any] | None = None) -> int | None:
+def execute(query: str, args: tuple[Any, ...] | dict[str, Any] | None = None) -> int | None:
     db: Connection = _get_db()
     cursor: Cursor = db.cursor()
 

@@ -36,7 +36,7 @@ class UserToken(Model):
     def expired_at(self) -> datetime:
         return self.__expired_at
 
-    def json_serialize(self) -> dict:
+    def json_serialize(self) -> dict[str, str]:
         return {
             "access_token": self.access_token,
         }

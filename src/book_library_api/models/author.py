@@ -37,7 +37,7 @@ class Author(Model):
         self.__name = author.name
         self.__created_at = author.created_at
 
-    def json_serialize(self) -> dict:
+    def json_serialize(self) -> dict[str, int | str | datetime]:
         return {
             "author_id": self.author_id,
             "name": self.name,

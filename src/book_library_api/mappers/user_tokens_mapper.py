@@ -3,6 +3,7 @@ from datetime import datetime
 from ..auth import AuthorizedUser
 from ..datetime import next_month_datetime, to_mysql_datetime, today_datetime
 from ..db import execute
+from ..exeptions import InternalServerError
 from ..hash import access_token_generate
 from ..models.user import User
 from ..models.user_token import UserToken
@@ -17,6 +18,9 @@ def user_token_create_by_user(user: User) -> UserToken:
         "VALUE (%s, %s, %s, %s)",
         (user.user_id, access_token, to_mysql_datetime(created_at), to_mysql_datetime(expired_at))
     )
+    
+    if user_token_id is None:
+        raise InternalServerError("User Token is not created")
 
     return UserToken(user_token_id, user.user_id, access_token, created_at, expired_at)
 

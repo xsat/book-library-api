@@ -4,6 +4,7 @@ from ..binders.book_binder import BookBinder
 from ..binders.list_binder import ListBinder
 from ..datetime import to_mysql_datetime, today_datetime
 from ..db import execute, query_all, query_one
+from ..exeptions import InternalServerError
 from ..models.book import Book
 from ..models.user import User
 
@@ -80,6 +81,9 @@ def book_create_by_binder_and_user(book_binder: BookBinder, user: User) -> Book:
         "VALUE (%s, %s, %s, %s)",
         (user.user_id, book_binder.title, book_binder.pages, to_mysql_datetime(created_at))
     )
+    
+    if book_id is None:
+        raise InternalServerError("Book is not created")
 
     return Book(book_id, user.user_id, book_binder.title, book_binder.pages, created_at)
 

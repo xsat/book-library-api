@@ -1,6 +1,7 @@
 from ..binders.user_binder import UserBinder
 from ..datetime import to_mysql_datetime, today_datetime
 from ..db import execute, query_one
+from ..exeptions import InternalServerError
 from ..hash import password_generate
 from ..models.user import User
 
@@ -21,7 +22,7 @@ def user_find_by_username(username: str) -> User | None:
 
 
 def user_find_by_valid_access_token(access_token: str) -> User | None:
-    result: dict | None = query_one(
+    result: dict[str, str] | None = query_one(
         "SELECT u.`user_id`, u.`username`, u.`password_hash` " +
         "FROM `users` AS u "
         "INNER JOIN `user_tokens` AS ut " +
@@ -43,6 +44,9 @@ def user_create_by_binder(user_binder: UserBinder) -> User:
         "VALUE (%s, %s)",
         (user_binder.username, password_hash)
     )
+    
+    if user_id is None:
+        raise InternalServerError("User is not created")
 
     return User(user_id, user_binder.username, password_hash)
 
@@ -75,7 +79,7 @@ def _build_user_from_dict(data: dict[str, str]) -> User:
         raise ValueError(data)
 
     return User(
-        data["user_id"],
+        int(data["user_id"]),
         data["username"],
         data["password_hash"]
     )

@@ -4,7 +4,7 @@ from .json import JsonSerializable
 
 
 class ApiError(Exception, JsonSerializable):
-    _code: int | None = None
+    _code: int = 0
     _message: str | None = None
 
     def __init__(self, message: str | None = None, *args: Any, **kwargs: Any):
@@ -15,7 +15,7 @@ class ApiError(Exception, JsonSerializable):
 
     @final
     @property
-    def code(self) -> int | None:
+    def code(self) -> int:
         return self._code
 
     @final
@@ -27,14 +27,19 @@ class ApiError(Exception, JsonSerializable):
 
 
 class BadRequestError(ApiError):
-    _code: int | None = 400
+    _code: int = 400
 
 
 class UnauthorizedError(ApiError):
-    _code: int | None = 401
+    _code: int = 401
     _message: str | None = "unauthorized"
 
 
 class NotFoundError(ApiError):
-    _code: int | None = 404
+    _code: int = 404
     _message: str | None = "not_found"
+
+
+class InternalServerError(ApiError):
+    _code: int = 500
+    

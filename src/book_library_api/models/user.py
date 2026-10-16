@@ -29,7 +29,7 @@ class User(Model):
         self.__username = user.username
         self.__password_hash = user.password_hash
 
-    def json_serialize(self) -> dict:
+    def json_serialize(self) -> dict[str, int | str]:
         return {
             "user_id": self.user_id,
             "username": self.username,

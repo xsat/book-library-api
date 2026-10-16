@@ -1,3 +1,5 @@
+from typing import Any
+
 from ._model import Model
 
 
@@ -22,5 +24,5 @@ class BookAuthor(Model):
     def author_id(self) -> int:
         return self.__author_id
 
-    def json_serialize(self) -> dict:
+    def json_serialize(self) -> dict[str, Any]:
         return {}
