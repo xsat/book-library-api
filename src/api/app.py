@@ -10,8 +10,8 @@ from .exeptions import ApiError
 from .json import ModelJSONProvider
 
 
-def main() -> Flask:
-    app: Flask = Flask(__name__, instance_relative_config=True)
+def create_app() -> Flask:
+    app: Flask = Flask("__name__", instance_relative_config=True)
     app.json = ModelJSONProvider(app)
     app.register_blueprint(auth_controller)
     app.register_blueprint(authors_controller)
@@ -28,4 +28,3 @@ def main() -> Flask:
         pass
 
     return app
-

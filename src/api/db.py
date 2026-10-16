@@ -1,14 +1,15 @@
 from typing import Any
 
 from flask import g
-from MySQLdb import Connection, connect
+from MySQLdb import connect
+from MySQLdb.connections import Connection
 from MySQLdb.cursors import Cursor, DictCursor
 
 
 def query_one(query: str, args: tuple[Any, ...] | dict[str, Any] | None = None) -> dict[str, Any] | None:
     db: Connection = _get_db()
     cursor: DictCursor = db.cursor(DictCursor)
-
+    
     try:
         cursor.execute(query, args)
 
@@ -52,4 +53,4 @@ def _get_db() -> Connection:
     if "db" not in g:
         g.db = connect(host="localhost", user="root", password="123456", database="book_library")
 
-    return g.db
+    return g.get("db")
