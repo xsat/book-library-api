@@ -21,9 +21,13 @@ class UserValidation(Validation):
             return False
 
         found_user: User | None = user_find_by_username(self.__user_binder.username)
-        if found_user is not None and self.__user is not None and found_user.user_id != self.__user.user_id or self.__user is None:
-                self.__error_message = "invalid_username"
-                return False
+        if found_user is not None and self.__user is None:
+            self.__error_message = "invalid_username"
+            return False
+         
+        if found_user is not None and self.__user is not None and found_user.user_id != self.__user.user_id:
+            self.__error_message = "invalid_username"
+            return False
 
         return True
 
